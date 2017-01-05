@@ -1,4 +1,4 @@
-# infinite-scroll-scraper
+# Infinite Website Scrolling Scraper
 _Media scraper for sites with infinite scrolling._  
 This script will load a website in a browser and download media from it.
 
