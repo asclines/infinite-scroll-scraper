@@ -7,6 +7,8 @@ class TestArguments(unittest.TestCase):
         """ Creates valid args for simplicity. Each test can modify the one they are testing."""
         self.args = scraper.Args
         self.args.url = "http://www.google.com"
+        self.args.pages = 3
+        self.args.folder = "./output"
 
     def test_invalid_url(self):
         """ Makes sure that the correct exception is raised when an invalid URL is pased in."""
