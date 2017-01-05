@@ -23,6 +23,19 @@ development skillsets.
 <!-- TODO: # Usage -->
 <!-- TODO: ## Example -->
 
+
+# Contributing
+Please fork this repository and contribute back using pull requests and feature branches.
+More info can be found on the [CONTRIBUTING.md](.github/CONTRIBUTING.md) page,
+
+
+
+## Running Tests
+You can run all tests by running this command in the root folder.
+```python
+python -m unittest discover
+```
+
 <!-- TODO:# Acknowledgements -->
 
 # Roadmap
