@@ -10,7 +10,7 @@ class Args(object):
 class UserInputException(Exception):
     """Raised when an exception is thrown due to user input."""
 
-def scrape_site(args):
+def scrape(args):
     """
     Entry method to all the real work.
     Epects args to be either filled from CLI argument parsing or from GUI.
@@ -35,4 +35,4 @@ def get_args():
 
 
 if __name__ == "__main__": # For future use when a GUI appears.
-    scrape_site(get_args())
+    scrape(get_args())

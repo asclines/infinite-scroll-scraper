@@ -12,4 +12,4 @@ class TestArguments(unittest.TestCase):
         """ Makes sure that the correct exception is raised when an invalid URL is pased in."""
         self.args.url = "notavalidurl"
         with self.assertRaises(scraper.UserInputException):
-            scraper.scrape_site(self.args)
+            scraper.scrape(self.args)
