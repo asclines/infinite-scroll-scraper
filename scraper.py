@@ -2,6 +2,11 @@ import argparse
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
+
+class Args(object):
+    """Simple class for holding args when not from CLI"""
+    pass
+
 class UserInputException(Exception):
     """Raised when an exception is thrown due to user input."""
 
