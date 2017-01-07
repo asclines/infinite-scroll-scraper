@@ -41,7 +41,9 @@ def scroll_page(page, count):
 def scrape_media(driver):
     """ Goes through the element and extracts media links."""
     # page_source = (driver.page_source).encode('utf-8')
-    find_img_elems(driver)
+    media_urls = []
+    media_urls.extend(find_img_elems(driver))
+    print(media_urls)
     # body_html = driver.find_element_by_tag_name("body")
 
 def find_img_elems(driver):
@@ -51,7 +53,7 @@ def find_img_elems(driver):
     for image_elem in image_elems:
         image_url = image_elem.get_attribute("src")
         results.append(image_url)
-    print(results)
+    return results
 
 def get_args():
     """Return the arguments passed in through CLI, or the defaults."""
@@ -61,6 +63,19 @@ def get_args():
     parser.add_argument('-u','--url', help='URL to scrape.', type=str, required=True)
     return parser.parse_args()
 
+# def download_media(urls, output_path):
+#     for url in urls:
+#         filename = media_url.rsplit('/', 1)[-1]
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 if __name__ == "__main__": # For future use when a GUI appears.
     scrape(get_args())
