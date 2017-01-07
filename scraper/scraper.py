@@ -1,14 +1,10 @@
-import os
-import errno
 import time
 import argparse
-import urllib2
-from urlparse import urlparse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
-
-valid_media_exts = set(['.jpg', '.gif', '.png'])
+import utils.urls as URLS
+from utils.files import download_media
 
 class Args(object):
     """Simple class for holding args when not from CLI"""
@@ -22,7 +18,7 @@ def scrape(args):
     Entry method to all the real work.
     Epects args to be either filled from CLI argument parsing or from GUI.
     """
-    if not is_url_valid(args.url):
+    if not URLS.is_url_valid(args.url):
         raise UserInputException("Invalid URL")
 
     driver = webdriver.Chrome()
@@ -32,7 +28,7 @@ def scrape(args):
         page = driver.find_element_by_tag_name("body")
         scroll_page(page, args.pages)
         media_urls = scrape_media(driver)
-        media_urls = filter_urls(media_urls)
+        media_urls = URLS.filter_urls(media_urls)
         download_media(media_urls, args.folder)
 
     except WebDriverException as e:
@@ -40,18 +36,6 @@ def scrape(args):
     finally:
         driver.quit()
 
-def is_url_valid(url):
-    return urlparse(url).scheme
-
-def filter_urls(urls):
-    """ Cleans URLs and filters them to the ones with correct file extenstions."""
-    clean_urls = []
-    for url in urls:
-        clean_url = url.strip().lower()
-        ext = os.path.splitext(clean_url )[1]
-        if ext in valid_media_exts:
-            clean_urls.append(clean_url)
-    return clean_urls
 
 def scroll_page(page, count):
     """ Pages down count times on page."""
@@ -85,33 +69,6 @@ def get_args():
     parser.add_argument('-u','--url', help='URL to scrape.', type=str, required=True)
     return parser.parse_args()
 
-def download_media(urls, output_path):
-    """ Downloads all media from the urls and stores in output_path"""
-    folderpath = output_path.rstrip('//')
-    mkdir_p(folderpath)
-    for url in urls:
-        filename = url.rsplit('/', 1)[-1]
-        filepath = "{}/{}".format(folderpath, filename)
-        if(os.path.isfile(filepath)):
-            print("{} already exists...skipping.".format(filename))
-        else:
-            print("Downloading {} \n\t from {}".format(filename,url))
-            request = urllib2.Request(url)
-            data = urllib2.urlopen(request).read()
-            output = open(filepath,'wb')
-            output.write(data)
-            output.close()
-
-
-def mkdir_p(path):
-    """ Python implementation of the bash cmd 'mkdir -p'"""
-    try:
-        os.makedirs(path)
-    except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir(path):
-            pass
-        else:
-            raise
 
 if __name__ == "__main__": # For future use when a GUI appears.
     scrape(get_args())
