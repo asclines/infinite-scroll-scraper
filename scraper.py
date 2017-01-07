@@ -68,6 +68,7 @@ def get_args():
     return parser.parse_args()
 
 def download_media(urls, output_path):
+    """ Downloads all media from the urls and stores in output_path"""
     folderpath = output_path.rstrip('//')
     mkdir_p(folderpath)
     for url in urls:
