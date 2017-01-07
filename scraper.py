@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 
-valid_media_exts = set(['jpg'])
+valid_media_exts = set(['.jpg', '.gif', '.png'])
 
 class Args(object):
     """Simple class for holding args when not from CLI"""
@@ -32,6 +32,7 @@ def scrape(args):
         page = driver.find_element_by_tag_name("body")
         scroll_page(page, args.pages)
         media_urls = scrape_media(driver)
+        media_urls = filter_urls(media_urls)
         download_media(media_urls, args.folder)
 
     except WebDriverException as e:
@@ -41,6 +42,16 @@ def scrape(args):
 
 def is_url_valid(url):
     return urlparse(url).scheme
+
+def filter_urls(urls):
+    """ Cleans URLs and filters them to the ones with correct file extenstions."""
+    clean_urls = []
+    for url in urls:
+        clean_url = url.strip().lower()
+        ext = os.path.splitext(clean_url )[1]
+        if ext in valid_media_exts:
+            clean_urls.append(clean_url)
+    return clean_urls
 
 def scroll_page(page, count):
     """ Pages down count times on page."""
