@@ -22,9 +22,8 @@ def scrape(args):
     Entry method to all the real work.
     Epects args to be either filled from CLI argument parsing or from GUI.
     """
-    if not is_url_valid:
+    if not is_url_valid(args.url):
         raise UserInputException("Invalid URL")
-
 
     driver = webdriver.Chrome()
     try:
