@@ -1,6 +1,8 @@
+import os
+import errno
 import time
 import argparse
-from urlparse import urlparse
+import urllib2
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
@@ -25,7 +27,9 @@ def scrape(args):
         time.sleep(1)
         page = driver.find_element_by_tag_name("body")
         scroll_page(page, args.pages)
-        scrape_media(driver)
+        media_urls = scrape_media(driver)
+        download_media(media_urls, args.folder)
+
     except WebDriverException as e:
         raise UserInputException("Invalid URL",e)
     finally:
@@ -43,8 +47,8 @@ def scrape_media(driver):
     # page_source = (driver.page_source).encode('utf-8')
     media_urls = []
     media_urls.extend(find_img_elems(driver))
-    print(media_urls)
     # body_html = driver.find_element_by_tag_name("body")
+    return media_urls
 
 def find_img_elems(driver):
     """ Finds all elements with tag <img> and returns a list of the src."""
@@ -63,12 +67,25 @@ def get_args():
     parser.add_argument('-u','--url', help='URL to scrape.', type=str, required=True)
     return parser.parse_args()
 
-# def download_media(urls, output_path):
-#     for url in urls:
-#         filename = media_url.rsplit('/', 1)[-1]
+def download_media(urls, output_path):
+    folderpath = output_path.rstrip('//')
+    mkdir_p(folderpath)
+    for url in urls:
+        filename = url.rsplit('/', 1)[-1]
+        filepath = "{}/{}".format(folderpath, filename)
+        if(os.path.isfile(filepath)):
+            print("{} already exists...skipping.".format(filename))
+        else:
+            print("Downloading {} \n\t from {}".format(filename,url))
+            request = urllib2.Request(url)
+            data = urllib2.urlopen(request).read()
+            output = open(filepath,'wb')
+            output.write(data)
+            output.close()
 
 
 def mkdir_p(path):
+    """ Python implementation of the bash cmd 'mkdir -p'"""
     try:
         os.makedirs(path)
     except OSError as exc:  # Python >2.5
