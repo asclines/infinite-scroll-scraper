@@ -67,7 +67,6 @@ python -m unittest discover
 <!-- TODO:# Acknowledgements -->
 
 # Roadmap
-* Make minimal viable product
 * Simplify installation with `pip`
 * Provide auto image cropping & editing
 * A GUI
