@@ -1,5 +1,4 @@
 import os
-import urllib2
 from urlparse import urlparse
 
 valid_media_exts = set(['.jpg', '.gif', '.png'])
@@ -17,11 +16,3 @@ def filter_urls(urls):
         if ext in valid_media_exts:
             clean_urls.append(clean_url)
     return clean_urls
-
-def download(url, path):
-    """ Downloads media from URL"""
-    request = urllib2.Request(url)
-    data = urllib2.urlopen(request).read()
-    output = open(path,'wb')
-    output.write(data)
-    output.close()

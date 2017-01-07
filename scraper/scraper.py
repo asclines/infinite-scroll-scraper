@@ -1,11 +1,10 @@
-import os
-import errno
 import time
 import argparse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import utils.urls as URLS
+from utils.files import download_media
 
 class Args(object):
     """Simple class for holding args when not from CLI"""
@@ -70,30 +69,6 @@ def get_args():
     parser.add_argument('-u','--url', help='URL to scrape.', type=str, required=True)
     return parser.parse_args()
 
-def download_media(urls, output_path):
-    """ Downloads all media from the urls and stores in output_path"""
-    folderpath = output_path.rstrip('//')
-    mkdir_p(folderpath)
-    for url in urls:
-        filename = url.rsplit('/', 1)[-1]
-        filepath = "{}/{}".format(folderpath, filename)
-        if(os.path.isfile(filepath)):
-            print("{} already exists...skipping.".format(filename))
-        else:
-            print("Downloading {} \n\t from {}".format(filename,url))
-            URLS.download(url, filepath)
-
-
-
-def mkdir_p(path):
-    """ Python implementation of the bash cmd 'mkdir -p'"""
-    try:
-        os.makedirs(path)
-    except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir(path):
-            pass
-        else:
-            raise
 
 if __name__ == "__main__": # For future use when a GUI appears.
     scrape(get_args())
