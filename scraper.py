@@ -3,6 +3,7 @@ import errno
 import time
 import argparse
 import urllib2
+from urlparse import urlparse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
@@ -21,6 +22,10 @@ def scrape(args):
     Entry method to all the real work.
     Epects args to be either filled from CLI argument parsing or from GUI.
     """
+    if not is_url_valid:
+        raise UserInputException("Invalid URL")
+
+
     driver = webdriver.Chrome()
     try:
         driver.get(args.url)
@@ -34,6 +39,9 @@ def scrape(args):
         raise UserInputException("Invalid URL",e)
     finally:
         driver.quit()
+
+def is_url_valid(url):
+    return urlparse(url).scheme
 
 def scroll_page(page, count):
     """ Pages down count times on page."""
