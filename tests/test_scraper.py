@@ -1,5 +1,8 @@
 import unittest
+#import context
 from .context import scraper
+import scraper.scraper as scraper
+
 
 class TestArguments(unittest.TestCase):
     """ Tests handling of arguments passed in from user."""
