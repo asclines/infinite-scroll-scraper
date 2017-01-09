@@ -13,6 +13,8 @@ class Args(object):
 class UserInputException(Exception):
     """Raised when an exception is thrown due to user input."""
 
+
+
 def scrape(args):
     """
     Entry method to all the real work.
