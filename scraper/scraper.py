@@ -3,8 +3,8 @@ import argparse
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
-import scraper.utils.urls as URLS
-from scraper.utils.files import download_media
+import utils.urls as URLS
+from utils.files import download_media
 
 class Args(object):
     """Simple class for holding args when not from CLI"""

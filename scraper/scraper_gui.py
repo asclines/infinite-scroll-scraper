@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import filedialog
-#from scraper import *
+from scraper import *
 import os
-#import utils.urls as URLS
+import utils.urls as URLS
+
 #Colors, fonts etc...
 COLOR = "#EAECEE"
 FONT = "Arial 14"
@@ -67,7 +68,7 @@ saveLocationButton = tk.Button(window,
 #----------Final button to execute program----------#
 # Determine if all user data is valid before executing
 def check(url,pages,folder):
-    #urlBool = URLS.is_url_valid(url)
+    urlBool = URLS.is_url_valid(url)
     pagesBool = pages.isdigit()
     folderBool = os.path.isdir(folder)
     if urlBool and pagesBool and folderBool:
