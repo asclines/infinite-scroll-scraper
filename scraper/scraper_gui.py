@@ -75,6 +75,18 @@ def check(url,pages,folder):
         return True
     else:
         return False
+# scrapeCall(url,pages,folder) creates an object from Data class with all
+# necessary data and passest to scraper(args)
+class Data:
+    def __init__(self,url,pages,folder):
+        self.url = url
+        self.pages = pages
+        self.folder = folder
+
+def scrapeCall(url,pages,folder):
+    pages = int(pages)
+    data = Data(url,pages,folder)
+    return data
 
 #Function that passes proper object to scraper with valid inputs
 def execute():
@@ -82,9 +94,9 @@ def execute():
     pages = pagesEntry.get()
     folder = saveLocationEntry.get()
     if check(url,pages,folder):
-        print("Everything is working")
+        scrapeCall(url,pages,folder)
     else:
-        print("Try again")
+        print("ERROR")
 
 scrapeButton = tk.Button(window,
                          text = "Scrape",
