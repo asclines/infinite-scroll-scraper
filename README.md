@@ -18,8 +18,8 @@ I hope this can help serve as an educational tool to showcase various software
 development skillsets.
 
 # Installation
-This script was built with **Python 2.7**.  
-It has not been test for **Python 3** yet.
+This script was built with/for **Python 3**.  
+
 
 ## System
 This script has currently only been testing on **Windows 10**.

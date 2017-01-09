@@ -1,6 +1,6 @@
 import os
 import errno
-import urllib2
+from urllib.request import urlopen
 
 def download_media(urls, output_path):
     """ Downloads all media from the urls and stores in output_path"""
@@ -29,8 +29,7 @@ def mkdir_p(path):
 
 def download(url, path):
     """ Downloads media from URL"""
-    request = urllib2.Request(url)
-    data = urllib2.urlopen(request).read()
+    data = urlopen(url).read()
     output = open(path,'wb')
     output.write(data)
     output.close()
