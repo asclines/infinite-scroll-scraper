@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 from scraper import *
 import os
 import utils.urls as URLS
@@ -25,9 +26,19 @@ urlEntry = tk.Entry(window,
                     font = FONT)
 urlEntry.grid(row = 0, column = 1)
 
+#checkURL(url) checks the users url validity if check button is pressed.
+# def checkURL(url):
+#     urlBool = URLS.is_url_valid(url)
+#     if urlBool:
+#         tkMessageBox.showinfo("","Valid URL").pack()
+#     else:
+#         tkMessageBox.showerror("ERROR", "Invalid URL").pack()
+#     return None
+
 urlButton = tk.Button(window,
                       text = "Check URL",
-                      highlightbackground = COLOR).grid(row = 0, column = 2)
+                      highlightbackground = COLOR,
+                      command = lambda: url = urlEntry.get()).grid(row = 0, column = 2)
 
 #----------pages label and entry----------#
 pagesLabel = tk.Label(window,
@@ -75,6 +86,7 @@ def check(url,pages,folder):
         return True
     else:
         return False
+
 # scrapeCall(url,pages,folder) creates an object from Data class with all
 # necessary data and passest to scraper(args)
 class Data:
@@ -103,9 +115,6 @@ scrapeButton = tk.Button(window,
                          highlightbackground = COLOR,
                          font = FONT,
                          command = lambda: execute()).grid(row = 3, column = 1)
-
-
-
 
 #Run the program
 window.mainloop()
