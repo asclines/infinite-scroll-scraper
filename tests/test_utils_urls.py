@@ -41,4 +41,4 @@ class TestUtilsUrls(unittest.TestCase):
 
         actual_result = urls.filter_urls(test_urls)
 
-        self.assertEquals(expected_result, actual_result)
+        self.assertEqual(expected_result, actual_result)
